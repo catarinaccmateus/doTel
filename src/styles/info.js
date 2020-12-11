@@ -22,4 +22,23 @@ export const styles = StyleSheet.create({
     padding: 5,
     marginVertical: 10,
   },
+  cardFront: {
+    backgroundColor: '#ff4d4d',
+    width: 200,
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backfaceVisibility: 'hidden',
+  },
+  cardBack: {
+    backgroundColor: '#66c2ff',
+    width: 200,
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backfaceVisibility: 'hidden',
+    position: 'absolute',
+    top: 0,
+  },
+  cardText: { fontWeight: 'bold', color: 'white', textAlign: 'center' },
 });

@@ -24,11 +24,10 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#e6f2ff',
   },
   body: {
     flex: 1,
-    margin: 30,
+    backgroundColor: '#e6f2ff',
   },
   hotelScroll: {
     paddingTop: 30,

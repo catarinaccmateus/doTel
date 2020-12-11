@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { SafeAreaView, View, TextInput, Platform, FlatList } from 'react-native';
+import { SafeAreaView, View, TextInput, Platform, FlatList, Animated } from 'react-native';
 
 import Header from 'components/Header';
 import HotelItem from 'components/HotelItem';
@@ -11,6 +11,7 @@ export default function LandPage({ navigation }) {
   const [searchValue, setSearch] = useState('');
   const [hotels, setHotels] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const animatedValue = React.useRef(new Animated.Value(0)).current;
 
   const inputStyle = Platform.select({
     ios: styles.inputiOS,
@@ -58,46 +59,64 @@ export default function LandPage({ navigation }) {
     };
   }, []);
 
+  const interpolateColor = animatedValue.interpolate({
+    inputRange: [0, 150],
+    outputRange: ['#0099ff', '#e6f5ff'],
+  });
+
+  const animatedStyle = {
+    backgroundColor: interpolateColor,
+  };
+
+  React.useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: 150,
+      duration: 1500,
+    }).start();
+  }, [animatedValue]);
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.body}>
-        <Header />
-        <TextInput
-          style={inputStyle}
-          placeholder="Find an hotel"
-          onChangeText={(text) => {
-            setSearch(text);
-          }}
-          value={searchValue}
-        />
-        <View style={styles.hotelList}>
-          <Loading isLoading={isLoading}>
-            <FlatList
-              data={hotels.filter((hotel) => {
-                return (
-                  !searchValue ||
-                  hotel.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-                  hotel.address.locality.toLowerCase().includes(searchValue.toLowerCase())
-                );
-              })}
-              renderItem={({ item, index }) => (
-                <HotelItem
-                  hotel={item}
-                  index={index}
-                  navigateToInfo={() =>
-                    navigation.navigate('HotelInfo', {
-                      hotel: item,
-                    })
-                  }
-                />
-              )}
-              keyExtractor={(item) => item.name + item.address}
-              initialNumToRender={10}
-              contentContainerStyle={styles.hotelScroll}
-            />
-          </Loading>
+      <Animated.View style={[styles.body, animatedStyle]}>
+        <View style={{ flex: 1, margin: 30 }}>
+          <Header />
+          <TextInput
+            style={inputStyle}
+            placeholder="Find an hotel"
+            onChangeText={(text) => {
+              setSearch(text);
+            }}
+            value={searchValue}
+          />
+          <View style={styles.hotelList}>
+            <Loading isLoading={isLoading}>
+              <FlatList
+                data={hotels.filter((hotel) => {
+                  return (
+                    !searchValue ||
+                    hotel.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+                    hotel.address.locality.toLowerCase().includes(searchValue.toLowerCase())
+                  );
+                })}
+                renderItem={({ item, index }) => (
+                  <HotelItem
+                    hotel={item}
+                    index={index}
+                    navigateToInfo={() =>
+                      navigation.navigate('HotelInfo', {
+                        hotel: item,
+                      })
+                    }
+                  />
+                )}
+                keyExtractor={(item) => item.name + item.address}
+                initialNumToRender={10}
+                contentContainerStyle={styles.hotelScroll}
+              />
+            </Loading>
+          </View>
         </View>
-      </View>
+      </Animated.View>
     </SafeAreaView>
   );
 }
