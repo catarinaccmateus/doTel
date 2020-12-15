@@ -93,7 +93,7 @@ const HotelInfo = ({ route, navigation }) => {
         <Text style={styles.hotelLink}>Add a Review!</Text>
       </TouchableHighlight>
       <TouchableOpacity onPress={() => flipCard()}>
-        <View>
+        <View style={{ marginTop: 30 }}>
           <Animated.View style={[styles.cardFront, frontAnimatedStyle]}>
             <Text style={styles.cardText}>Flip this card to get a discount!</Text>
           </Animated.View>

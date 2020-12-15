@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    backgroundColor: '#e6f2ff',
   },
   body: {
     flex: 1,
@@ -89,5 +90,15 @@ export const styles = StyleSheet.create({
     minHeight: 30,
     marginHorizontal: 30,
     padding: 10,
+  },
+  pageContent: { flex: 1, margin: 30 },
+  mapLink: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
+  },
+  mapText: {
+    fontWeight: '700',
   },
 });

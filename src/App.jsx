@@ -5,6 +5,7 @@ import Landpage from './pages/LandPage';
 import HotelInfo from './pages/HotelInfo';
 import About from './pages/About';
 import Review from './pages/Review';
+import Map from './pages/Map';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SplashScreen from 'react-native-splash-screen';
@@ -30,6 +31,13 @@ function AppStack() {
         component={HotelInfo}
         options={{
           title: 'Hotel Details',
+        }}
+      />
+      <MainStack.Screen
+        name="Map"
+        component={Map}
+        options={{
+          title: 'Find your hotel',
         }}
       />
     </MainStack.Navigator>
@@ -64,8 +72,11 @@ function TabNavigator() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#ffad33',
+        activeTintColor: '#004080',
         inactiveTintColor: '#666666',
+        tabStyle: { backgroundColor: '#cce6ff' },
+        keyboardHidesTabBar: true,
+        labelStyle: { padding: 4 },
       }}
     >
       <Tab.Screen name="List" component={AppStack} />

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { SafeAreaView, View, TextInput, Platform, FlatList, Animated } from 'react-native';
+import { SafeAreaView, View, TextInput, Platform, FlatList, Animated, Text } from 'react-native';
 
 import Header from 'components/Header';
 import HotelItem from 'components/HotelItem';
 import Loading from 'components/Loading';
 import { styles } from 'styles/app';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { hotelsDataBase } from '~/utils/constants';
 
 export default function LandPage({ navigation }) {
   const [searchValue, setSearch] = useState('');
@@ -41,15 +43,7 @@ export default function LandPage({ navigation }) {
         })
         .catch((err) => {
           console.error(err);
-          setHotels([
-            {
-              name: 'Test Hotel',
-              starRating: 5,
-              address: { streetAddress: 'Av. Liberdade 55', locality: 'Lisbon' },
-              thumbnailUrl:
-                'https://www.nit.pt/wp-content/uploads/2020/09/242c401eb39e01093c52bcbfa8e7dd05-754x394.jpg',
-            },
-          ]);
+          setHotels(hotelsDataBase);
           setLoading(false);
         });
     }
@@ -78,7 +72,7 @@ export default function LandPage({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Animated.View style={[styles.body, animatedStyle]}>
-        <View style={{ flex: 1, margin: 30 }}>
+        <View style={styles.pageContent}>
           <Header />
           <TextInput
             style={inputStyle}
@@ -88,6 +82,9 @@ export default function LandPage({ navigation }) {
             }}
             value={searchValue}
           />
+          <TouchableOpacity style={styles.mapLink} onPress={() => navigation.navigate('Map')}>
+            <Text style={styles.mapText}>Or click here check our hotels map!</Text>
+          </TouchableOpacity>
           <View style={styles.hotelList}>
             <Loading isLoading={isLoading}>
               <FlatList

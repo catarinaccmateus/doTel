@@ -23,12 +23,13 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
   },
   cardFront: {
-    backgroundColor: '#ff4d4d',
+    backgroundColor: '#ff9900',
     width: 200,
     height: 200,
     alignItems: 'center',
     justifyContent: 'center',
     backfaceVisibility: 'hidden',
+    borderRadius: 5,
   },
   cardBack: {
     backgroundColor: '#66c2ff',
@@ -39,6 +40,7 @@ export const styles = StyleSheet.create({
     backfaceVisibility: 'hidden',
     position: 'absolute',
     top: 0,
+    borderRadius: 5,
   },
   cardText: { fontWeight: 'bold', color: 'white', textAlign: 'center' },
 });
