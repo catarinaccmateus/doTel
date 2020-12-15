@@ -10,6 +10,8 @@ target 'doTel' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
   target 'doTelTests' do
     inherit! :complete
     # Pods for testing
