@@ -4,30 +4,55 @@ export const hotelsDataBase = [
     starRating: 4,
     address: { streetAddress: 'Av. Liberdade 55', locality: 'Lisbon' },
     thumbnailUrl: 'https://www.nit.pt/wp-content/uploads/2020/09/242c401eb39e01093c52bcbfa8e7dd05-754x394.jpg',
+    latlng: {
+      latitude: 38.732502,
+      longitude: -9.369278,
+    },
+    price: 34,
   },
   {
     name: 'Friends Hostel',
     starRating: 4,
     address: { streetAddress: 'Av. Liberdade 55', locality: 'Lisbon' },
     thumbnailUrl: 'https://www.nit.pt/wp-content/uploads/2020/09/242c401eb39e01093c52bcbfa8e7dd05-754x394.jpg',
+    latlng: {
+      latitude: 38.71456,
+      longitude: -9.152792,
+    },
+    price: 34,
   },
   {
     name: 'Hello World Vacations',
     starRating: 2.5,
     address: { streetAddress: 'Av. Liberdade 55', locality: 'Lisbon' },
     thumbnailUrl: 'https://www.nit.pt/wp-content/uploads/2020/09/242c401eb39e01093c52bcbfa8e7dd05-754x394.jpg',
+    latlng: {
+      latitude: 38.732502,
+      longitude: -9.369278,
+    },
+    price: 34,
   },
   {
     name: 'Friend and Family Co',
     starRating: 3,
     address: { streetAddress: 'Av. Liberdade 55', locality: 'Lisbon' },
     thumbnailUrl: 'https://www.nit.pt/wp-content/uploads/2020/09/242c401eb39e01093c52bcbfa8e7dd05-754x394.jpg',
+    latlng: {
+      latitude: 38.7265482,
+      longitude: -9.123443,
+    },
+    price: 34,
   },
   {
     name: 'Marriot',
     starRating: 5,
     address: { streetAddress: 'Av. Liberdade 55', locality: 'Lisbon' },
     thumbnailUrl: 'https://www.nit.pt/wp-content/uploads/2020/09/242c401eb39e01093c52bcbfa8e7dd05-754x394.jpg',
+    latlng: {
+      latitude: 38.732502,
+      longitude: -9.166493,
+    },
+    price: 34,
   },
 ];
 

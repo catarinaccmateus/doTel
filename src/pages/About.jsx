@@ -5,38 +5,35 @@ import { styles } from 'styles/about';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function About() {
-  const animatedValue = React.useRef(new Animated.ValueXY()).current;
-  const panResponderAnimatedValue = React.useRef(new Animated.ValueXY()).current;
-  panResponderAnimatedValue.addListener((value) => (animatedValue.current = value));
   const [homeLayoutLocation, setHomeLayoutLocation] = React.useState({ x: 0, y: 0 });
 
+  const animatedValue = React.useRef(new Animated.ValueXY()).current;
+  const comparisonValue = React.useRef(new Animated.ValueXY());
+
+  animatedValue.addListener((value) => (comparisonValue.current = value));
   const panResponder = React.useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        panResponderAnimatedValue.setOffset({
-          x: animatedValue.x,
-          y: animatedValue.y,
+      /*onPanResponderGrant: () => {
+        animatedValue.setOffset({
+          x: comparisonValue.current.x,
+          y: comparisonValue.current.y,
         });
-        panResponderAnimatedValue.setValue({ x: 0, y: 0 });
+        animatedValue.setValue({ x: 0, y: 0 });
+      },*/
+      onPanResponderMove: (event, gesture) => {
+        animatedValue.setValue({ x: gesture.dx, y: gesture.dy });
       },
-      onPanResponderMove: Animated.event([null, { dx: panResponderAnimatedValue.x, dy: panResponderAnimatedValue.y }]),
       onPanResponderRelease: () => {
-        Animated.spring(panResponderAnimatedValue, { toValue: homeLayoutLocation }).start();
+        Animated.spring(animatedValue, { toValue: homeLayoutLocation }).start();
       },
     })
   ).current;
 
   const animatedStyle = {
-    transform: panResponderAnimatedValue.getTranslateTransform(),
+    transform: animatedValue.getTranslateTransform(),
   };
-
-  console.log('TEST', panResponderAnimatedValue.getTranslateTransform());
-
-  React.useEffect(() => {
-    panResponderAnimatedValue.current = new Animated.ValueXY();
-  }, [panResponderAnimatedValue]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,13 +50,16 @@ export default function About() {
             Your best friend will never be expelled from the hotel! {'\n'}Try to drag him out.
           </Text>
           <View style={{ width: '100%', alignItems: 'center', paddingTop: 30 }}>
-            <Animated.View style={[animatedStyle]} {...panResponder.panHandlers}>
+            <Animated.View
+              style={[{ height: 40, width: 40 }, homeLayoutLocation, animatedStyle]}
+              {...panResponder.panHandlers}
+            >
               <Icon name="dog" color="#996633" size={30} style={styles.icon} />
             </Animated.View>
             <View
               onLayout={(event) => {
                 const layout = event.nativeEvent.layout;
-                setHomeLayoutLocation({ x: layout.x, y: layout.y });
+                setHomeLayoutLocation({ x: layout.x + 50, y: layout.y + 50 });
               }}
             >
               <Icon name="home" color="#cc3300" size={40} style={styles.icon} />
