@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { SafeAreaView, View, TextInput, Platform, FlatList, Animated, Text, Button } from 'react-native';
+import { SafeAreaView, View, TextInput, Platform, FlatList, Animated, Text, Button, Alert } from 'react-native';
 
 import Header from 'components/Header';
 import HotelItem from 'components/HotelItem';
@@ -22,13 +22,11 @@ export default function LandPage({ navigation }) {
   });
 
   const handleButtonPress = () => {
-    console.log('hey');
-
     PushNotification.localNotification({
       autoCancel: true,
       bigText: 'This is local notification demo in React Native app. Only shown, when expanded.',
       subText: 'Local Notification Demo',
-      title: 'Local Notification Title',
+      title: 'Amazing Dotel notification',
       message: 'Expand me to see more',
       vibrate: true,
       vibration: 300,
@@ -36,7 +34,6 @@ export default function LandPage({ navigation }) {
       soundName: 'default',
       actions: '["Yes", "No"]',
     });
-    console.log('end');
   };
 
   React.useEffect(() => {
