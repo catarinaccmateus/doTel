@@ -6,6 +6,9 @@
 
 #import "RNSplashScreen.h" //CM added this
 #import <GoogleMaps/GoogleMaps.h> //CM added this
+#import <UserNotifications/UserNotifications.h> //CM added this
+#import <RNCPushNotificationIOS.h> //CM added this
+#import <Firebase.h> //CM added this
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -14,6 +17,8 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+
+
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -33,6 +38,10 @@ static void InitializeFlipper(UIApplication *application) {
   
 [GMSServices provideAPIKey:@"AIzaSyCnAOaUINw17f2ok4hf-NlQoPuyzbBtAW0"]; //CM added this
   
+  if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  } //CM added this
+  
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
@@ -50,10 +59,18 @@ static void InitializeFlipper(UIApplication *application) {
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   
+  UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter]; //CM
+  center.delegate = self; //CM
+  
   [RNSplashScreen show]; //CM added this
   
   return YES;
 }
+
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center  willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+  completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionBadge);
+} //CM
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {

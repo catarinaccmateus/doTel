@@ -9,6 +9,11 @@ import Map from './pages/Map';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SplashScreen from 'react-native-splash-screen';
+import messaging from '@react-native-firebase/messaging';
+import NotifService from '../notificationservice.js';
+import { Alert } from 'react-native';
+import PushNotification from 'react-native-push-notification';
+import { not } from 'react-native-reanimated';
 
 const MainStack = createStackNavigator();
 
@@ -106,9 +111,33 @@ function RootStackScreen() {
 }
 
 function App() {
+  function onRegister(token) {
+    console.log('TOKEN ON REGISTER', token);
+  }
+
+  function onNotif(notif) {
+    Alert.alert(notif.title, notif.message);
+  }
+  const notif = React.useRef(new NotifService(onRegister, onNotif));
+
   React.useEffect(() => {
     SplashScreen.hide();
   }, []);
+  React.useEffect(() => {
+    async function requestUserPermission() {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+    }
+    requestUserPermission();
+    notif.current.localNotif();
+  }, [notif]);
+
   return <RootStackScreen />;
 }
 

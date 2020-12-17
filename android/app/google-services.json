@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "709748040951",
+    "project_id": "dotel-c13a8",
+    "storage_bucket": "dotel-c13a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709748040951:android:61ab77f233398b0692dff2",
+        "android_client_info": {
+          "package_name": "com.dotel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709748040951-p6ojufir1ctok7rvsdhbf8bsrbavr19t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3ECqKRKiTavGzGEWQxtt8ovZFmNk5Byg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709748040951-p6ojufir1ctok7rvsdhbf8bsrbavr19t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { SafeAreaView, View, TextInput, Platform, FlatList, Animated, Text } from 'react-native';
+import { SafeAreaView, View, TextInput, Platform, FlatList, Animated, Text, Button } from 'react-native';
 
 import Header from 'components/Header';
 import HotelItem from 'components/HotelItem';
@@ -8,6 +8,8 @@ import Loading from 'components/Loading';
 import { styles } from 'styles/app';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { hotelsDataBase } from '~/utils/constants';
+//import { LocalNotification } from '../services/LocalPushNotificationsController.js';
+import PushNotification from 'react-native-push-notification';
 
 export default function LandPage({ navigation }) {
   const [searchValue, setSearch] = useState('');
@@ -19,6 +21,34 @@ export default function LandPage({ navigation }) {
     ios: styles.inputiOS,
     android: styles.input,
   });
+
+  const handleButtonPress = () => {
+    console.log('pressed');
+    /*PushNotification.popInitialNotification((notification) => {
+      console.log('Initial Noghgjhtification', notification);
+    });*/
+    PushNotification.localNotification({
+      autoCancel: true,
+      bigText: 'This is local notification demo in React Native app. Only shown, when expanded.',
+      subText: 'Local Notification Demo',
+      title: 'Local Notification Title',
+      message: 'Expand me to see more',
+      vibrate: true,
+      vibration: 300,
+      playSound: true,
+      soundName: 'default',
+      actions: '["Yes", "No"]',
+    });
+    console.log('end');
+
+    /*
+    PushNotification.localNotificationSchedule({
+      //... You can use all the options from localNotifications
+      message: 'My Notification Message', // (required)
+      date: new Date(Date.now() + 60 * 1000), // in 60 secs
+      allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
+    });*/
+  };
 
   React.useEffect(() => {
     const getHotelsRequest = axios.CancelToken.source();
@@ -85,6 +115,7 @@ export default function LandPage({ navigation }) {
           <TouchableOpacity style={styles.mapLink} onPress={() => navigation.navigate('Map')}>
             <Text style={styles.mapText}>Or click here check our hotels map!</Text>
           </TouchableOpacity>
+          <Button title={'Local Push Notification'} onPress={() => handleButtonPress()} />
           <View style={styles.hotelList}>
             <Loading isLoading={isLoading}>
               <FlatList
