@@ -12,8 +12,6 @@ import SplashScreen from 'react-native-splash-screen';
 import messaging from '@react-native-firebase/messaging';
 import NotifService from '../notificationservice.js';
 import { Alert } from 'react-native';
-import PushNotification from 'react-native-push-notification';
-import { not } from 'react-native-reanimated';
 
 const MainStack = createStackNavigator();
 
@@ -137,6 +135,14 @@ function App() {
     requestUserPermission();
     notif.current.scheduleNotif();
   }, [notif]);
+
+  React.useEffect(() => {
+    console.log('subscribing');
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+    return unsubscribe;
+  }, []);
 
   return <RootStackScreen />;
 }

@@ -22,6 +22,8 @@ export default function LandPage({ navigation }) {
   });
 
   const handleButtonPress = () => {
+    console.log('hey');
+
     PushNotification.localNotification({
       autoCancel: true,
       bigText: 'This is local notification demo in React Native app. Only shown, when expanded.',
