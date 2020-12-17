@@ -135,7 +135,7 @@ function App() {
       }
     }
     requestUserPermission();
-    notif.current.localNotif();
+    notif.current.scheduleNotif();
   }, [notif]);
 
   return <RootStackScreen />;

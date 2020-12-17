@@ -8,7 +8,6 @@ import Loading from 'components/Loading';
 import { styles } from 'styles/app';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { hotelsDataBase } from '~/utils/constants';
-//import { LocalNotification } from '../services/LocalPushNotificationsController.js';
 import PushNotification from 'react-native-push-notification';
 
 export default function LandPage({ navigation }) {
@@ -23,10 +22,6 @@ export default function LandPage({ navigation }) {
   });
 
   const handleButtonPress = () => {
-    console.log('pressed');
-    /*PushNotification.popInitialNotification((notification) => {
-      console.log('Initial Noghgjhtification', notification);
-    });*/
     PushNotification.localNotification({
       autoCancel: true,
       bigText: 'This is local notification demo in React Native app. Only shown, when expanded.',
@@ -40,14 +35,6 @@ export default function LandPage({ navigation }) {
       actions: '["Yes", "No"]',
     });
     console.log('end');
-
-    /*
-    PushNotification.localNotificationSchedule({
-      //... You can use all the options from localNotifications
-      message: 'My Notification Message', // (required)
-      date: new Date(Date.now() + 60 * 1000), // in 60 secs
-      allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
-    });*/
   };
 
   React.useEffect(() => {
