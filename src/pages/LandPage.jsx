@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { SafeAreaView, View, TextInput, Platform, FlatList, Animated, Text, Button, Alert } from 'react-native';
+import { SafeAreaView, View, TextInput, Platform, FlatList, Animated, Text, Button, Linking } from 'react-native';
 
 import Header from 'components/Header';
 import HotelItem from 'components/HotelItem';
@@ -24,10 +24,10 @@ export default function LandPage({ navigation }) {
   const handleButtonPress = () => {
     PushNotification.localNotification({
       autoCancel: true,
-      bigText: 'This is local notification demo in React Native app. Only shown, when expanded.',
-      subText: 'Local Notification Demo',
-      title: 'Amazing Dotel notification',
-      message: 'Expand me to see more',
+      bigText: 'Use this discount during checkout.',
+      subText: 'Valid for today',
+      title: 'Use this discount code - XJSI38A',
+      message: 'Only in hotels with opportunity label',
       vibrate: true,
       vibration: 300,
       playSound: true,
@@ -85,6 +85,34 @@ export default function LandPage({ navigation }) {
     }).start();
   }, [animatedValue]);
 
+  const filterNavigation = React.useCallback(
+    (url) => {
+      const { navigate } = navigation;
+      const route = url.replace(/.*?:\/\//g, '');
+      const routeName = route.split('/')[0];
+      navigate(routeName.charAt(0).toUpperCase() + route.slice(1).toLowerCase());
+    },
+    [navigation]
+  );
+
+  React.useEffect(() => {
+    async function getUrl() {
+      if (Platform.OS === 'android') {
+        Linking.getInitialURL().then((url) => {
+          filterNavigation(url);
+        });
+      } else {
+        Linking.addEventListener('url', (event) => {
+          filterNavigation(event.url);
+        });
+      }
+    }
+    getUrl();
+    return Linking.removeEventListener('url', (event) => {
+      filterNavigation(event.url);
+    });
+  }, [filterNavigation]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Animated.View style={[styles.body, animatedStyle]}>
@@ -101,7 +129,7 @@ export default function LandPage({ navigation }) {
           <TouchableOpacity style={styles.mapLink} onPress={() => navigation.navigate('Map')}>
             <Text style={styles.mapText}>Or click here check our hotels map!</Text>
           </TouchableOpacity>
-          <Button title={'Local Push Notification'} onPress={() => handleButtonPress()} />
+          <Button title={'Click to get an amazing discount!'} onPress={() => handleButtonPress()} />
           <View style={styles.hotelList}>
             <Loading isLoading={isLoading}>
               <FlatList

@@ -148,18 +148,3 @@ function App() {
 }
 
 export default App;
-
-/** We are using our MainStackScreen component as a
- * screen inside RootStackScreen! By doing this,
- * we are nesting a stack navigator inside of another
- *  stack navigator. In this case, this is useful for us
- * because we want to use a different transition style
- * for the modal. Since RootStackScreen renders a stack
- * navigator and has its own header,
- * we also want to hide the header for this screen.
- * In the future this will be important because for tab
- * navigation, for example, each tab will likely have
- * its own stack! Intuitively, this is what you expect:
- * when you are on tab A and switch to tab B, you would
- * like tab A to maintain its navigation state as you
- * continue to explore tab B */
