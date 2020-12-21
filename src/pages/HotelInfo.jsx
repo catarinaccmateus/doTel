@@ -1,6 +1,6 @@
 import React from 'react';
 import { styles } from 'styles/info';
-import { View, Text, TouchableHighlight, Animated, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableHighlight, Animated, TouchableOpacity, Button } from 'react-native';
 import Stars from 'components/Stars';
 import Loading from 'components/Loading';
 
@@ -102,6 +102,7 @@ const HotelInfo = ({ route, navigation }) => {
           </Animated.View>
         </View>
       </TouchableOpacity>
+      <Button title={'Click here to browse to hotel page'} onPress={() => navigation.navigate('Webview')} />
     </View>
   );
 };

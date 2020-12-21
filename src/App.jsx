@@ -6,6 +6,7 @@ import HotelInfo from './pages/HotelInfo';
 import About from './pages/About';
 import Review from './pages/Review';
 import Map from './pages/Map';
+import HotelWebview from './pages/Webview';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SplashScreen from 'react-native-splash-screen';
@@ -36,6 +37,7 @@ function AppStack() {
           title: 'Hotel Details',
         }}
       />
+      <MainStack.Screen name="Webview" component={HotelWebview} />
       <MainStack.Screen
         name="Map"
         component={Map}

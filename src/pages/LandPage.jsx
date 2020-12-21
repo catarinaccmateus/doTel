@@ -129,7 +129,6 @@ export default function LandPage({ navigation }) {
           <TouchableOpacity style={styles.mapLink} onPress={() => navigation.navigate('Map')}>
             <Text style={styles.mapText}>Or click here check our hotels map!</Text>
           </TouchableOpacity>
-          <Button title={'Click to get an amazing discount!'} onPress={() => handleButtonPress()} />
           <View style={styles.hotelList}>
             <Loading isLoading={isLoading}>
               <FlatList
@@ -158,6 +157,7 @@ export default function LandPage({ navigation }) {
             </Loading>
           </View>
         </View>
+        <Button title={'Click to get an amazing discount!'} onPress={() => handleButtonPress()} />
       </Animated.View>
     </SafeAreaView>
   );
