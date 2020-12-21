@@ -2,6 +2,20 @@ import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 
+const html = `
+<html>
+<head></head>
+<body>
+  <script>
+    setTimeout(function () {
+      window.ReactNativeWebView.postMessage("Hello!")
+    }, 2000)
+  </script>
+  <div><b>This is the hotel main page.</b></div>
+</body>
+</html>
+`;
+
 export default function HotelWebview() {
   const webview = React.useRef(null);
 
@@ -34,13 +48,53 @@ export default function HotelWebview() {
     }
   }
 
+  WebView.isFileUploadSupported().then((res) => {
+    if (res === true) {
+      console.log('file upload is supported in this OS');
+    } else {
+      console.log('file upload is not supported in this OS');
+    }
+  });
+
+  const runFirst = `
+  window.isNativeApp = true;
+  true; // note: this is required, or you'll sometimes get silent failures
+`;
+
+  const runSecond = `
+  document.body.style.backgroundColor = 'red';
+  setTimeout(function() { window.alert('You just injected some JS to your webview!') }, 2000);
+  true; // note: this is required, or you'll sometimes get silent failures
+`;
+
+  const run = `
+      document.body.style.backgroundColor = 'blue';
+      true;
+    `;
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      webview.current.injectJavaScript(run);
+    }, 3000);
+  }, [run]);
+
   return (
     <WebView
       ref={(ref) => (webview.current = ref)}
-      source={{ uri: 'https://reactnative.dev/' }}
+      source={{ html }}
+      onMessage={(event) => {
+        alert(event.nativeEvent.data);
+      }}
       onNavigationStateChange={handleWebViewNavigationStateChange}
       startInLoadingState={true}
-      renderLoading={() => <ActivityIndicator color="black" size="large" />}
+      renderLoading={() => <ActivityIndicator color="black" size="large" style={{ flex: 1 }} />}
+      onFileDownload={({ nativeEvent }) => {
+        const { downloadUrl } = nativeEvent;
+        // --> Your download code goes here <--
+      }}
+      injectedJavaScript={runSecond}
+      injectedJavaScriptBeforeContentLoaded={runFirst}
+      sharedCookiesEnabled={true}
     />
   );
 }
